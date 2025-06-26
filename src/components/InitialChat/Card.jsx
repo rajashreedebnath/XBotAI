@@ -1,53 +1,33 @@
-import { Box, Typography, Stack, Paper, IconButton } from "@mui/material";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import { Stack, Typography } from "@mui/material";
 
-export default function Card({ heading, subtext, handleClick }) {
+function Card({ heading, subtext, generateResponse }) {
   return (
-    <Paper
-      elevation={2}
+    <Stack
+      justifyContent={"center"}
+      alignItems={"flex-start"}
+      p={2}
+      spacing={2}
+      borderRadius={1}
+      boxShadow={"0 0 12px rgba(0,0,0,0.1)"}
       bgcolor={"primary.light"}
       sx={{
-        p: { xs: 1.5, md: 2 },
         "&:hover .MuiIconButton-root": {
           opacity: 1,
         },
+        cursor: "pointer",
         "&:hover": {
           bgcolor: "primary.bglight",
         },
-        cursor: "pointer",
-
         transition: "background 200ms ease",
       }}
-      onClick={()=>handleClick(heading)}
+      onClick={() => generateResponse(heading)}
     >
-      <Stack
-        direction={"row"}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-      >
-        <Box>
-          <Typography
-            variant="heading"
-            fontWeight={700}
-            fontSize={{ xs: 14, md: 20 }}
-          >
-            {heading}
-          </Typography>
-          <Typography color={"text.secondary"} fontSize={{ xs: 10, md: 16 }}>
-            {subtext}
-          </Typography>
-        </Box>
-        <IconButton
-          size="small"
-          sx={{
-            opacity: 0,
-            bgcolor: "primary.bglight",
-            transition: "opacity 400ms ease",
-          }}
-        >
-          <ArrowUpwardIcon fontSize="inherit" />
-        </IconButton>
-      </Stack>
-    </Paper>
+      <Typography component="h2" variant="h2" fontSize={{ xs: 14, md: 20 }}>
+        {heading}
+      </Typography>
+      <Typography fontSize={{ xs: 10, md: 16 }}>{subtext}</Typography>
+    </Stack>
   );
 }
+
+export default Card;

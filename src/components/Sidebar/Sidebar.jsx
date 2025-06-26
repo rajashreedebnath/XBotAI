@@ -1,88 +1,80 @@
-import { Typography, Box, Stack, Button, useMediaQuery } from "@mui/material";
+import { Button, Stack, useMediaQuery, Box, Typography } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { useContext } from "react";
-import {ThemeContext} from '../../theme/ThemeContext';
-import icon from '../../assests/bot.png';
-import AddCommentIcon from '@mui/icons-material/AddComment';
-import CloseIcon from '@mui/icons-material/Close';
+import { ThemeContext } from "../../theme/ThemeContext";
+import icon from "../../assets/newchat.png";
+import AddCommentIcon from "@mui/icons-material/AddComment";
 import { Link } from "react-router-dom";
 
-export default function Sidebar({setChat, closeMenu}){
-    const {mode, setMode} = useContext(ThemeContext);
-    const isMobile = useMediaQuery('(max-width:900px)');
+function Sidebar({ closeMenu, setChat }) {
+  const isMobile = useMediaQuery("(max-width:900px)");
+  const [mode, setMode] = useContext(ThemeContext);
 
-    return (
-    <Box>
-      {isMobile && (
-        <Box
-          width={1}
+  return (
+    <Stack direction="column" spacing={2}>
+      {isMobile ? (
+        <Button
+          endIcon={<CloseIcon />}
+          onClick={closeMenu}
           sx={{
-            display: "flex",
-            flexDirection: "row",
+            color: mode == "light" ? "primary.dark" : "text.primary",
             justifyContent: "flex-end",
           }}
         >
-          <Button
-            endIcon={<CloseIcon />}
-            sx={{
-              justifyContent: "flex-end",
-              color: mode === "light" ? "primary.dark" : "text.primary",
-            }}
-            onClick={closeMenu}
-          >
-            Close
-          </Button>
-        </Box>
-      )}
+          Close
+        </Button>
+      ) : null}
 
       <Link to={"/"} style={{ textDecoration: "none" }}>
         <Stack
-          onClick={() => {
-            setChat([]);
-            closeMenu();
-          }}
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          padding={2}
           sx={{
             bgcolor: "primary.main",
             "&:hover ": {
               bgcolor: "primary.bg",
             },
           }}
-          direction={"row"}
-          spacing={1}
-          alignItems={"center"}
-          justifyContent={"space-between"}
-          py={2}
-          px={{ xs: 2, md: 3 }}
+          onClick={() => {
+            setChat([]);
+            closeMenu();
+          }}
         >
-          <Stack direction={"row"} gap={1} alignItems={"center"}>
+          <Stack direction="row" spacing={2} alignItems={"center"}>
             <Box
-              component={"img"}
+              component="img"
               src={icon}
-              height={42}
-              width={42}
-              borderRadius={2}
-              boxShadow={4}
-              flexShrink={0}
-            />
-            <Typography
-              variant={"heading"}
-              fontSize={{ xs: 16, md: 20 }}
-              color={"text.primary"}
-            >
+              borderRadius={"50%"}
+              width={40}
+              height={40}
+            ></Box>
+
+            <Typography variant="h5" fontSize={20} color={"text.primary"}>
               New Chat
             </Typography>
           </Stack>
-
-          <AddCommentIcon sx={{ color: "text.primary" }} />
+          <AddCommentIcon />
         </Stack>
       </Link>
 
-      <Box p={{ xs: 2, md: 3 }}>
+      <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
         <Link to={"/history"}>
-          <Button variant="contained" sx={{ width: 1 }} onClick={closeMenu}>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{ px: 2, mx: 4, alignSelf: "center" }}
+            onClick={closeMenu}
+          >
             Past Conversations
           </Button>
         </Link>
       </Box>
-    </Box>
+    </Stack>
   );
 }
+
+export default Sidebar;

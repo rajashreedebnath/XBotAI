@@ -1,9 +1,9 @@
-import { Typography, Stack, Box, Grid } from "@mui/material";
-import icon from '../../assests/bot.png';
-import Card from './Card';
+import { Box, Grid, Stack, Typography } from "@mui/material";
+import icon from "../../assets/bot.png";
+import Card from "./Card";
 
-const InitialChat = ({generateResponse})=>{
-    const initialData = [
+function InitialChat({ generateResponse }) {
+  const initialData = [
     {
       heading: "Hi, what is the weather",
       subtext: "Get immediate AI generated response",
@@ -21,33 +21,37 @@ const InitialChat = ({generateResponse})=>{
       subtext: "Get immediate AI generated response",
     },
   ];
-  return (
-    <Stack justifyContent={'flex-end'} p={{xs:2, md:3}}>
-      <Stack alignItems={"center"} spacing={2} my={4}>
-        <Typography variant="h2">How Can I Help You Today?</Typography>
-        <Box 
-          component={"img"}
-          src={icon}
-          height={{ xs: 42, md: 70 }}
-          width={{ xs: 42, md: 70 }}
-          boxShadow={4}
-          borderRadius={"50%"}
-        />
-      </Stack>
-      <Grid container spacing={{xs:1, md:3}}>
-        {initialData.map((data)=>
-          <Grid item key={data.heading} xs={12} md={6}>
-            <Card 
-              heading={data.heading}
-              subtext={data.subtext}
-              handleClick={generateResponse}
-            />
-          </Grid>
-        )}
 
+  const renderedItems = initialData.map((item) => {
+    return (
+      <Grid size={{ xs: 12, md: 6 }}>
+        <Card
+          heading={item.heading}
+          subtext={item.subtext}
+          generateResponse={generateResponse}
+        />
+      </Grid>
+    );
+  });
+
+  return (
+    <Stack alignItems={"center"} justifyContent={"flex-end"} spacing={2}>
+      <Typography variant="h2" component={"h2"}>
+        How Can I Help You Today?
+      </Typography>
+      <Box
+        component={"img"}
+        src={icon}
+        borderRadius={"50%"}
+        height={70}
+        width={70}
+      ></Box>
+
+      <Grid container spacing={2} padding={2}>
+        {renderedItems}
       </Grid>
     </Stack>
-  )
+  );
 }
 
 export default InitialChat;
